@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>27Fall 申请看板 · 社会学/拉美研究</title>
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --ink: #1c2333;
+    --ink-2: #5b6478;
+    --ink-3: #8a93a6;
+    --line: #e4e7ee;
+    --red: #d64550;
+    --orange: #e08a2e;
+    --yellow: #c9a227;
+    --green: #3d9a6c;
+    --gray: #9aa3b2;
+    --tier-chong: #d64550;
+    --tier-zhu: #2f6fd0;
+    --tier-bao: #3d9a6c;
+    --p0: #d64550;
+    --p1: #e08a2e;
+    --p2: #c9a227;
+    --p3: #2f6fd0;
+    --p4: #7a6fd0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 1560px; margin: 0 auto; padding: 20px 24px 60px; }
+
+  /* ── 顶部 ── */
+  header.top {
+    display: flex; flex-wrap: wrap; align-items: flex-end; gap: 18px 28px;
+    padding: 18px 0 14px;
+  }
+  header.top h1 { font-size: 22px; font-weight: 700; letter-spacing: .5px; }
+  header.top .sub { color: var(--ink-3); font-size: 12px; margin-top: 2px; }
+  .stats { display: flex; gap: 12px; flex-wrap: wrap; margin-left: auto; }
+  .stat {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 8px 16px; min-width: 96px; text-align: center;
+  }
+  .stat .num { font-size: 20px; font-weight: 700; }
+  .stat .lbl { font-size: 11px; color: var(--ink-3); }
+  .stat.urgent .num { color: var(--red); }
+
+  .progress-strip {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 12px 18px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .progress-strip .bar-wrap { flex: 1; min-width: 220px; }
+  .progress-strip .bar-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-2); margin-bottom: 5px; }
+  .bar { height: 8px; background: #eceff4; border-radius: 99px; overflow: hidden; }
+  .bar > div { height: 100%; background: linear-gradient(90deg, #2f6fd0, #3d9a6c); border-radius: 99px; transition: width .3s; }
+
+  /* ── 近期节点 ── */
+  .timeline {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 12px 18px; margin-bottom: 16px;
+  }
+  .timeline h2 { font-size: 13px; color: var(--ink-2); font-weight: 600; margin-bottom: 10px; }
+  .tl-items { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; }
+  .tl-item {
+    flex: 0 0 auto; border: 1px solid var(--line); border-radius: 10px;
+    padding: 8px 12px; min-width: 168px; background: #fafbfd;
+  }
+  .tl-item .d { font-size: 12px; font-weight: 700; }
+  .tl-item .what { font-size: 12px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+  .tl-item .left { font-size: 11px; font-weight: 600; margin-top: 2px; }
+
+  /* ── 工具栏 ── */
+  .toolbar { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+  .chip-group { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .chip-group .g-label { font-size: 12px; color: var(--ink-3); margin-right: 2px; }
+  .chip {
+    border: 1px solid var(--line); background: var(--card); color: var(--ink-2);
+    border-radius: 99px; padding: 4px 12px; font-size: 12px; cursor: pointer; user-select: none;
+  }
+  .chip:hover { border-color: #c3cad8; }
+  .chip.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  select {
+    border: 1px solid var(--line); background: var(--card); border-radius: 8px;
+    padding: 5px 10px; font-size: 12px; color: var(--ink-2); font-family: inherit;
+  }
+
+  /* ── 看板 ── */
+  .board { display: flex; gap: 14px; align-items: flex-start; overflow-x: auto; padding-bottom: 10px; }
+  .col { flex: 1 0 268px; min-width: 268px; max-width: 340px; }
+  .col-head {
+    border-radius: 10px 10px 0 0; padding: 9px 12px; color: #fff;
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .col-head .stage { font-weight: 800; font-size: 14px; }
+  .col-head .desc { font-size: 11px; opacity: .92; flex: 1; }
+  .col-head .cnt { font-size: 11px; background: rgba(255,255,255,.25); border-radius: 99px; padding: 1px 8px; }
+  .col-body {
+    background: #eceef3; border-radius: 0 0 10px 10px; padding: 10px;
+    display: flex; flex-direction: column; gap: 10px; min-height: 80px;
+  }
+
+  /* ── 卡片 ── */
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 11px 12px; box-shadow: 0 1px 2px rgba(20,30,60,.04);
+  }
+  .card-top { display: flex; align-items: flex-start; gap: 8px; }
+  .card .ord { font-size: 11px; color: var(--ink-3); font-weight: 700; margin-top: 2px; }
+  .card .name { flex: 1; cursor: pointer; }
+  .card .school { font-weight: 700; font-size: 14px; }
+  .card .program { font-size: 12px; color: var(--ink-2); }
+  .tier { font-size: 10px; font-weight: 700; color: #fff; border-radius: 5px; padding: 2px 7px; white-space: nowrap; }
+  .tier.冲刺 { background: var(--tier-chong); }
+  .tier.主申 { background: var(--tier-zhu); }
+  .tier.保底 { background: var(--tier-bao); }
+
+  .ddl-line { display: flex; align-items: baseline; gap: 8px; margin-top: 8px; }
+  .ddl-line .days { font-size: 18px; font-weight: 800; }
+  .ddl-line .days small { font-size: 11px; font-weight: 600; margin-left: 1px; }
+  .ddl-line .date { font-size: 12px; color: var(--ink-2); }
+  .ddl-line .date .est { color: var(--yellow); font-weight: 700; }
+  .meta { font-size: 11.5px; color: var(--ink-2); margin-top: 3px; display: flex; gap: 5px; }
+  .meta .k { color: var(--ink-3); flex: 0 0 auto; }
+  .meta.schol .v { color: var(--orange); font-weight: 600; }
+  .meta.schol .left-tag { font-weight: 700; }
+
+  .card-foot { display: flex; align-items: center; gap: 8px; margin-top: 9px; }
+  select.status {
+    flex: 1; font-size: 12px; padding: 4px 8px; border-radius: 7px;
+    border: 1px solid var(--line); font-family: inherit; cursor: pointer;
+  }
+  select.status.s0 { color: var(--ink-3); }
+  select.status.s1 { color: var(--tier-zhu); border-color: #b9cff0; background: #f2f7ff; }
+  select.status.s2 { color: var(--green); border-color: #bfe3d2; background: #f2fbf6; }
+  select.status.s3 { color: var(--gray); background: #f3f4f6; }
+  .todo-mini { font-size: 11px; color: var(--ink-3); white-space: nowrap; cursor: pointer; }
+  .todo-mini:hover { color: var(--ink); }
+
+  .details { display: none; margin-top: 10px; border-top: 1px dashed var(--line); padding-top: 9px; }
+  .card.open .details { display: block; }
+  .details .sec { margin-bottom: 9px; }
+  .details .sec-t { font-size: 11px; font-weight: 700; color: var(--ink-3); margin-bottom: 4px; }
+  .details .reason, .details .note { font-size: 12px; color: var(--ink-2); }
+  .details .note { background: #fbf7ec; border: 1px solid #f0e6c8; border-radius: 7px; padding: 6px 9px; }
+  .todos { list-style: none; }
+  .todos li { display: flex; gap: 7px; align-items: flex-start; font-size: 12px; color: var(--ink-2); padding: 2.5px 0; cursor: pointer; }
+  .todos li input { margin-top: 3px; accent-color: var(--green); cursor: pointer; }
+  .todos li.done span { text-decoration: line-through; color: var(--ink-3); }
+
+  footer { margin-top: 26px; color: var(--ink-3); font-size: 11.5px; line-height: 1.7; }
+  .empty-hint { color: var(--ink-3); font-size: 12px; text-align: center; padding: 14px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <h1>27Fall 申请看板 · 社会学 / 拉美研究</h1>
+      <div class="sub">数据源：v9 申请顺序版（基准日 2026-09-08）；2026-09-12 已逐项官网复核；「~」为官方未公布、按上一周期平移的推定日期</div>
+    </div>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="progress-strip">
+    <div class="bar-wrap">
+      <div class="bar-label"><span>整体投递进度</span><span id="progress-text"></span></div>
+      <div class="bar"><div id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="bar-wrap">
+      <div class="bar-label"><span>待办事项完成度</span><span id="todo-text"></span></div>
+      <div class="bar"><div id="todo-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <h2>⏰ 近期关键节点（申请截止 + 奖学金/材料节点，按日期排序）</h2>
+    <div class="tl-items" id="timeline"></div>
+  </div>
+
+  <div class="toolbar">
+    <div class="chip-group" id="stage-filter">
+      <span class="g-label">阶段</span>
+      <span class="chip on" data-v="all">全部</span>
+      <span class="chip" data-v="P0">P0 立即启动</span>
+      <span class="chip" data-v="P1">P1 10-11月</span>
+      <span class="chip" data-v="P2">P2 12-3月</span>
+      <span class="chip" data-v="P4">P4 2-6月</span>
+    </div>
+    <div class="chip-group" id="tier-filter">
+      <span class="g-label">梯度</span>
+      <span class="chip on" data-v="all">全部</span>
+      <span class="chip" data-v="冲刺">冲刺</span>
+      <span class="chip" data-v="主申">主申</span>
+      <span class="chip" data-v="保底">保底</span>
+    </div>
+    <div class="chip-group">
+      <span class="g-label">排序</span>
+      <select id="sort">
+        <option value="order">申请顺序（v9）</option>
+        <option value="deadline">截止时间</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="board" id="board"></div>
+
+  <footer>
+    阶段划分：P0 = 立即启动（9月）｜P1 = 10-11月完成投递｜P2 = 12月-3月投递｜P4 = 2-6月收尾（待公布项目盯官网）。<br>
+    所有状态与待办勾选仅保存在本浏览器 localStorage，不会上传；换浏览器/清缓存会丢失。
+  </footer>
+</div>
+
+<script>
+const DATA = [
+  { order:1, stage:"P0", school:"UBC", program:"MA Sociology", tier:"冲刺",
+    open:{date:"2026-09-01",label:"已开放"}, deadline:{date:"2026-12-01"},
+    scholarship:{label:"推荐信提交截止", date:"2026-12-06"},
+    reason:"已开放+截止最早之一；3位学术推荐人需机构邮箱，邀请-提交常需4-8周",
+    todos:[
+      "确认语言成绩：IELTS 7.0（单项≥6.5）或 TOEFL iBT 100（读写≥25、听说≥22），成绩≤24个月，官方送分代码0965；GRE不要求",
+      "注册/找回 UBC CWL 账号（每人仅一个，勿重复注册）",
+      "敲定3位学术推荐人并用机构邮箱登记（付费后系统自动发邀请；Interfolio可用但需4-6周）",
+      "撰写学术目标陈述500-1000词：研究问题、理论传统、方法技能、意向导师契合度",
+      "非社会学背景者另写≤500词准备度说明（相关课程/阅读/研究经历）",
+      "写作样本定稿：高年级课程主论文或同等学术作品（PDF）",
+      "准备CV + 全部高校official成绩单扫描件（含正反面+评分标准，非英文附认证翻译）",
+      "9-01开放后在UBC Graduate Studies网申系统填写上传（建议先Word起草，预留约2小时）",
+      "在线支付申请费：国际生CDN$168.25（2027-28周期）",
+      "12-01前提交全部材料（推荐信尽量12-01前到齐）；录取后由院校直接寄送密封official成绩单；国际生办学习许可"],
+    note:"IELTS 7.0(6.5)且成绩≤24个月；无需提前锁导师。复核：G+PS项目页写3封推荐信/12-06截止，系内页写2封/12-01前——按3封准备并尽量12-01前到齐" },
+
+  { order:2, stage:"P0", school:"McGill", program:"MA Sociology (Thesis)/DS", tier:"冲刺",
+    open:{date:"2026-09-15",est:true,label:"2026-09中（官网原文mid-September）"}, deadline:{date:"2027-01-07"},
+    reason:"开放在即；官网强烈建议申请前联系导师确认名额，邮件往返2-4周",
+    todos:[
+      "9-10月联系潜在导师确认在招（系里强烈建议）；Medical Sociology Option须先联系Graduate Program Director/Prof. Dennis",
+      "确认GPA（建议CGPA≥3.3/4.0）+ IELTS 6.5；GRE不要求",
+      "9月中开放后注册McGill招生门户账号（邮箱收临时PIN设密码；旧生也需新建）",
+      "撰写PS≤1000词（双倍行距）：研究兴趣、意向导师、学术/职业规划；勿用生成式AI",
+      "写作样本定稿：英/法文研究论文≤30页（双倍行距）",
+      "准备CV + 全部高校成绩单扫描件（非英/法文附认证翻译；未显示学位授予须附学位证）",
+      "邀请2位学术推荐人（机构邮箱，门户自动发邀请线上传；信件须12个月内）",
+      "填写网申各表单，review后提交并支付申请费CAD$143.82（一笔可同季申2个项目；Fall 2027金额待确认）",
+      "提交后在门户checklist上传全部支持材料，2027-01-07前全部到齐（材料不全不审理）",
+      "录取后安排official成绩单寄送；国际生办魁省CAQ+学习许可"],
+    note:"2027-28 Non-Thesis停招不影响Thesis/DS；IELTS 6.5；GRE不再要求；Medical Sociology Option须先联系Graduate Program Director/Prof. Dennis" },
+
+  { order:3, stage:"P0", school:"UofT", program:"MA Sociology", tier:"冲刺",
+    open:{date:"2026-10-01"}, deadline:{date:"2026-12-01"},
+    scholarship:{label:"OGS（申请季同步提交，副本发系研招办）", date:"2027-03-15"},
+    reason:"截止与UBC并列最早；名额极少，statement必须写faculty fit，需逐位研究教员方向",
+    todos:[
+      "研究系内教员并定制研究陈述：1页单倍行距（可另加1页参考文献），阐明研究议程与faculty fit",
+      "最佳论文样稿定稿：10-25页双倍行距、独立原创，可两篇拼合",
+      "（可选）Personal Statement 1页单倍行距（个人背景与多样性贡献）",
+      "准备CV + 每所高校成绩单扫描件各1份（含评分说明legend；非英文须公证英译）",
+      "语言成绩按SGS最低要求官方电子送分至UofT代码0982（分数线待确认）；GRE不考虑",
+      "邀请2位推荐人（机构邮箱；付费后系统自动发邀请）",
+      "10-01 SGS网申开放后注册填写上传；材料传完再付申请费CAD$130（付费后不可改）",
+      "12-01 23:59 EST前完成申请、付费及全部材料上传",
+      "同步申请OGS（截止3-15；申UofT则不得再申他校），副本发 sociology.graduate@utoronto.ca",
+      "提交后：1月中可能面试；2月中入围者补official成绩单；2-3月发offer（无保底资助）；国际生办学习许可"],
+    note:"2027-28起MA无保底资助包；GRE不考虑" },
+
+  { order:4, stage:"P0", school:"IHEID", program:"MA ANSO", tier:"冲刺",
+    open:{date:"2026-10-01",est:true,label:"~2026-10-01（26-27平移）"}, deadline:{date:"2027-01-15",est:true,label:"~2027-01-15（aid轮）/ ~03-01 / ~04-15"},
+    scholarship:{label:"financial aid 仅此轮", date:"2027-01-15", est:true},
+    reason:"若要助学金必须赶1-15轮（CHF100）；2-3封学术推荐信",
+    todos:[
+      "确定轮次：申financial aid必须走~01-15轮（CHF100）；不申aid可选~03-01轮（CHF200）或ANSO特有~04-15轮（CHF300）",
+      "准备英语成绩（CEFR C1）：IELTS 7.0（单项≥6.5）/ TOEFL iBT 100（R19/L20/S20/W24，代码8909）/ Cambridge C1≥185；可后补至2027-05-30",
+      "向本科学校申请official成绩单（含交换/转学分原始成绩单+评分体系说明）+学位证扫描件；非英/法/德/意/西语文件须certified英译",
+      "撰写动机信（英/法，≤800词：为何该校该项目、经历与目标）",
+      "准备CV（英/法，建议≤2页）",
+      "确定2-3位推荐人（学术优先，离校久远可职业推荐），核实工作邮箱",
+      "10-01开放后立即注册网申账号，填表并登记推荐人联系方式",
+      "上传PDF材料（勿加密）：动机信、CV、成绩单、学位证、英语证书、护照/身份证个人信息页",
+      "如申aid：同一网申表内完成，上传需求说明信（约1页）+本人收入证明+父母收入证明（<26岁必交）或近3个月银行流水",
+      "按轮次缴申请费（CHF100/200/300，不可减免）并Submit（每周期只能申1个项目）",
+      "提交后查online follow-up；提醒推荐人截止后7天内（01-22/03-08/04-22）交推荐信",
+      "录取后：填确认表+缴CHF1,000预注册费（抵学费）；conditional offer者05-30前补语言、09-15前补最终成绩单+学位证"],
+    note:"27-28未公布，按现行周期平移（结构已逐条吻合）；4-15轮(CHF300)仅ANSO等三硕士可用；不要aid可放3-01轮" },
+
+  { order:5, stage:"P0", school:"IHEID", program:"MINT", tier:"冲刺",
+    open:{date:"2026-10-01",est:true,label:"~2026-10-01（26-27平移）"}, deadline:{date:"2027-01-15",est:true,label:"~2027-01-15（aid轮）/ ~03-01（最终）"},
+    scholarship:{label:"financial aid 仅此轮", date:"2027-01-15", est:true},
+    reason:"同ANSO；MINT最终轮3-01（CHF200），不要aid可稍缓",
+    todos:[
+      "确定轮次：申financial aid必须走~01-15轮（CHF100）；MINT最终轮~03-01（CHF200）；04-15轮不适用",
+      "从7个specialisation中选定方向并写进动机信",
+      "准备英语成绩（CEFR C1）：IELTS 7.0（单项≥6.5）/ TOEFL iBT 100 / Cambridge C1≥185；可后补至2027-05-30",
+      "official成绩单（含交换/转学分原始件+评分体系）+学位证扫描件；非英/法/德/意/西语须certified英译",
+      "撰写动机信（英/法，≤800词，结合所选specialisation）",
+      "准备CV（英/法，建议≤2页）",
+      "确定2-3位推荐人（学术优先），核实工作邮箱",
+      "10-01开放后注册网申账号，填表并登记推荐人信息",
+      "上传PDF材料（勿加密）：动机信、CV、成绩单、学位证、英语证书、护照/身份证个人信息页",
+      "如申aid：同一表内完成，上传需求说明信+本人及父母收入证明（<26岁父母证明必交）或银行流水",
+      "缴申请费（01-15轮CHF100 / 03-01轮CHF200）并Submit（每周期仅可申1个项目）",
+      "提交后查follow-up；推荐人须于截止后7天内（01-22/03-08）交推荐信；录取后缴CHF1,000预注册费，conditional者05-30前补语言、09-15前补学位文件"],
+    note:"27-28未公布，按现行周期平移；4-15轮不适用MINT；7个specialisations已官网确认" },
+
+  { order:6, stage:"P1", school:"Stockholm", program:"MSc Sociology", tier:"主申",
+    open:{date:"2026-10-16"}, deadline:{date:"2027-01-15"},
+    scholarship:{label:"动机信上传（jotform）", date:"2027-02-01"},
+    reason:"瑞典统一轮；动机信必须用jotform网页表单生成，不能事后补",
+    todos:[
+      "核对资格：社会科学学士学位且社会学相关课程≥60 ECTS；英语达English 6",
+      "考英语：IELTS 6.5（单项≥5.5）或 TOEFL iBT 90（写作≥20）",
+      "在universityadmissions.se创建账户（可报最多4个硕士并排序）",
+      "用社会学系指定jotform表单在线撰写含research ideas的动机信，提交后从邮件收PDF（每学期须重新生成）",
+      "按平台国家指南准备official成绩单+学位证（中国学历按country instructions特殊要求，待确认细节）",
+      "10-16开放后提交申请并排序志愿",
+      "缴申请费SEK 900（非EU/EEA，一次覆盖同学期全部志愿，不可退）",
+      "2027-01-15前完成网申提交",
+      "2027-02-01前上传全部材料+动机信PDF（缺动机信不予评估）",
+      "提交后查结果；录取后办居留许可并缴学费（首期45,000 SEK）"],
+    note:"选拔=成绩50+动机信50+相关度100；IELTS 6.5(5.5)；autumn 2027日期已官网公布" },
+
+  { order:7, stage:"P1", school:"Gothenburg", program:"MSc Global Studies", tier:"主申",
+    open:{date:"2026-10-16"}, deadline:{date:"2027-01-15"},
+    scholarship:{label:"材料+缴费", date:"2027-02-01"},
+    reason:"与Stockholm同平台同截止，可同批操作",
+    todos:[
+      "核对资格：学士学位且社会科学/人文课程≥30学分；英语English 6（IELTS 6.5单项≥5.5 / TOEFL iBT 90写作≥20）",
+      "无需动机信/CV/推荐信：仅按大学学分排名选拔（最多计165学分），不要上传未要求的材料",
+      "在universityadmissions.se同一账户加报本项目，与斯大等一次投递并排序",
+      "按国家指南准备official成绩单+学位证（中国学历特殊要求按country instructions，待确认）",
+      "2026-10-16至2027-01-15提交网申",
+      "缴申请费SEK 900（非EU/EEA，一次覆盖同学期所有志愿）",
+      "2027-02-01前补齐全部材料并确保缴费到账",
+      "提交后查结果；录取后办居留许可并缴学费（首期48,000 SEK；EU/EEA免学费）"],
+    note:"瑞典全国Autumn 2027日历已正式公布（universityadmissions.se，2026-08-31更新）；该项目无需动机信/CV/推荐信，仅按学分排名" },
+
+  { order:8, stage:"P1", school:"Utrecht", program:"RMA SaSR", tier:"冲刺",
+    open:{date:"2026-10-01"}, deadline:{date:"2027-04-01",label:"2027-04-01（非EU）"},
+    scholarship:{label:"奖学金（申则实际截止提前）", date:"2027-02-01"},
+    reason:"申奖学金则实际截止提前到2-01，按P1准备",
+    todos:[
+      "核对资格：社会/行为科学学士学位，均分≥7.5荷兰制（7.0-7.5可用其他优势补偿）；每年约招20人，选拔制",
+      "考英语：IELTS 6.5（单项≥6.0）或 TOEFL iBT 93（单项≥20），成绩≤2年",
+      "填写官方Checklist Methods and Statistics，并收集清单上每门课的教学大纲（英/荷语；其他语言附自写英文摘要）",
+      "11-12月完成研究型文书：动机陈述（用官网uu-motivation表格，含研究兴趣+方法训练）+ CV",
+      "1月前落实2位推荐人，推荐人须在截止前填写官方推荐表（referees-letter-of-recommendation-UU）",
+      "10-01开放后在Studielink注册申请（2个工作日内收OSIRIS Online Application登录信息）",
+      "在OSIRIS上传：学位证/预计学位证明、成绩单（含GPA）、未完成课程清单（在读生）、动机陈述、CV、护照扫描件、英语成绩、M&S Checklist+大纲",
+      "在OSIRIS缴申请费€100（非荷兰学位；多项目只缴一次）",
+      "如申NL Scholarship（€5,000-15,000/第一年）：2027-02-01前在OSIRIS提交（动机说明+财务计划+Statement of Financial Resources表）",
+      "非EU截止2027-04-01 23:59 CET前完成全部材料（逾期不完整申请将被取消）",
+      "提交后约20个工作日出结果；录取后按条件寄送certified学位/成绩单副本",
+      "录取后由Visa Office指导办签证/居留；尽早安排住房"],
+    note:"研究型2年；IELTS 6.5(6.0)/TOEFL 93；官网为常年固定节点（10-01开放/2-01奖学金/4-01截止）；写作样本/研究提案非必需" },
+
+  { order:9, stage:"P1", school:"Alberta", program:"MA Sociology (Thesis)", tier:"冲刺",
+    open:{date:"2026-09-01",label:"已开放"}, deadline:{date:"2027-01-15",label:"2027-01-15 23:59 MST"},
+    reason:"已开放；研究兴趣陈述将发展为研究提案，需打磨",
+    todos:[
+      "确认GPA换算：最后两年≥3.3/4.0（3.7有竞争力）",
+      "准备语言成绩（系要求高于校线）：IELTS 7.0（单项≥5.5）/ CAEL 70 / PTE 68（单项60）",
+      "提前4-6周邀请2位学术推荐人；提交+付费后系统自动发邀请，推荐信须01-15前到齐（逾期不受理）",
+      "撰写Statement of Intent 500-1000词（双倍行距、12号字、1英寸边距，建议点名意向导师）",
+      "撰写Research Statement ≤1000词（须具体、引用相关文献、契合系内导师方向）",
+      "准备CV + 独立作者英文写作样本 ≤7000词（含参考文献）",
+      "准备全部院校official成绩单扫描件（含评分标准；中国学历附中英文原件或CSSD/CHESICC件，不接受WES），PDF按Lastname_Firstname_DocumentType命名",
+      "在GSMS网申门户（gradapply.ualberta.ca）注册填写上传",
+      "支付申请费（金额以GSMS门户为准，待确认）；建议截止前至少2周提交",
+      "01-15 23:59 MST前完成全部申请（含推荐信到齐）；录取后寄送official纸质成绩单；国际生办学习许可"],
+    note:"IELTS 7.0（单项≥5.5，系内要求高于校级线）；完整申请含推荐信须1-15前到齐" },
+
+  { order:10, stage:"P1", school:"UvA", program:"MSc Sociology", tier:"主申",
+    open:{date:"2026-10-01",est:true,label:"~2026-10（预计）"}, deadline:{date:"2027-01-23",est:true,label:"~2027-01-23 / ~02-02（26-27平移）"},
+    reason:"60ECTS社会学理论+方法先修逐门评估，课程描述准备耗时",
+    todos:[
+      "整理本科课程描述：社会学理论+研究方法逐门（英文，含内容/文献/学分/学习成果），合并为一个PDF（对应60 ECTS先修审核）",
+      "考IELTS 7.0（单项≥6.5）或TOEFL iBT；申请时即须提交，成绩2年内有效",
+      "准备英文CV（建议Europass格式，含在读课程与学分）",
+      "写动机信约750词：申请动机+如何满足入学要求，内含3-4个研究问题",
+      "准备英文学术写作样本3-5页A4（无英文样本需专门撰写，≤5页）",
+      "备好2位推荐人姓名+联系方式（招生委认为必要时才联系；已有推荐信可自行上传，非必需）",
+      "备全部高教成绩单+文凭扫描件；非英/荷/德/法文需宣誓翻译；附本地评分与学分体系说明",
+      "Studielink注册申请（非EU截止推定~2027-01-23 17:00 CET）",
+      "激活UvAnetID，在SIS填写提交并在线支付€100申请费（SIS截止推定~2027-02-02）",
+      "等待录取决定（26-27通知期4月底-5月），收到offer后在系统中接受/拒绝",
+      "录取后：请本科大学将official最终成绩单+文凭直接电邮至 apply_gsss@uva.nl 或经在线验证系统发送",
+      "录取后：办签证/移民登记、住宿申请，缴学费，申请学生证"],
+    note:"日期为26-27平移推定，27-28未公布；IELTS 7.0且单项≥6.5；申请费€100" },
+
+  { order:11, stage:"P1", school:"UPF", program:"RM Sociology & Demography", tier:"冲刺",
+    open:{date:"2026-11-14",est:true,label:"~2026-11-14（26-27首轮开放平移）"}, deadline:{date:"2027-01-14",est:true,label:"~2027-01-14（首轮，共5轮）"},
+    reason:"首轮预计1月中关，想首轮拿结果须11月备好（27-28批次未公布，按26-27平移）",
+    todos:[
+      "准备英文CV",
+      "写英文动机信（最多2页）；如走双学位须在动机信中明确声明",
+      "联系2位推荐人（学术或职业，须与项目相关）：网申系统内填推荐人机构邮箱（不收gmail/yahoo等），推荐人收邮件后自行上传",
+      "备英语B2水平证明；母语者或英语授课背景可上传简短豁免说明信替代",
+      "备本科学位证+官方成绩单（未毕业：签毕业前取得学位声明+临时成绩单）；非加/西/英/法/葡/意文需宣誓翻译",
+      "备护照或身份证扫描件",
+      "2026-11中起在UPF Online Office注册并填写网申（首轮~11-14至~01-14，共5轮；国际生建议前4轮，第5轮通知在9月来不及签证）",
+      "上传全部材料（单文件≤9MB）并在线支付€30.21申请费（不退；每申一个项目单独收费）",
+      "提交后约2周在系统查状态；学术委员会可能安排面试",
+      "收到录取后在规定窗口内接受offer（首轮通知约2027-02-11，接受窗口约4天）；之后办学历认证/合法化与签证"],
+    note:"26-27共5轮（首轮11-14至01-14），本项目1-5轮均可申；预注册费30.21€已官网确认；官网建议尽早申请留签证时间" },
+
+  { order:12, stage:"P2", school:"KU Leuven", program:"Master of Sociology", tier:"主申",
+    open:{date:"2026-10-09",est:true,label:"~2026-10（预计，26-27于10-09开放）"}, deadline:{date:"2027-03-01",est:true,label:"~2027-03-01（非EEA建议，26-27平移）"},
+    reason:"27-28窗口尚未开放；Rolling但材料量大：每门相关课程半页英文描述+英文学术论文",
+    todos:[
+      "准备语言成绩：IELTS 7.0-7.5 或 TOEFL iBT 100（或Cambridge C1≥184 / ITACE C1）；来不及可先传考试报名证明，注册入学前补齐",
+      "准备护照身份页扫描件；学位证+成绩单（在读可传临时成绩单；非英/荷/法/德文须宣誓翻译）",
+      "撰写动机信（1页A4）与CV",
+      "撰写课程描述：与社会学及社会研究方法（定量+定性）最相关课程，每门约半页英文",
+      "准备英文学术论文（体现社科理论、方法论与学术写作能力；非EEA学历必需）",
+      "如成绩单未含评分体系说明，另备grading table；中国大陆学历申请时无需APS（签证阶段要求待确认）",
+      "网申开放后（预计2026-10）在KU Leuven在线申请工具注册guest account，填写并上传全部材料",
+      "支付申请费€90（不退；银行转账须上传含户名与账户信息的付款凭证）",
+      "建议非EEA ~03-01、EEA ~06-01前提交（26-27建议截止，27-28待公布）",
+      "录取后完成学历核验（在线/邮件或携原件赴比利时现场核验），9-16前完成注册；非EEA办比利时学生签证"],
+    note:"IELTS 7.0-7.5/TOEFL 100（27-28录取要求已公布）；EEA截止为9-01（非6-01）；申请费€90" },
+
+  { order:13, stage:"P2", school:"Leiden", program:"MA Latin American Studies", tier:"主申",
+    open:{date:"2026-10-01",est:true,label:"~2026-10-01（Studielink常年规则）"}, deadline:{date:"2027-04-01",label:"2027-04-01（需签证；非签证5-15）"},
+    reason:"截止4-01但需签证，建议2月前投出留足签证时间",
+    todos:[
+      "备西班牙语和/或葡萄牙语水平证明：阅读C1，听/说/写均B2（招生委评估）",
+      "考IELTS 6.5（单项≥6.0）或TOEFL iBT 90（单项≥20）；成绩2年内有效、单次考试取得",
+      "备成绩单+文凭扫描件（未毕业：注明预计毕业日期+待完成课程清单）；非英/荷/德/法文需官方翻译",
+      "下载并填写Questionnaire Master Application表格（人文学院模板，说明专业知识与学术技能）",
+      "2026-10-01起在Studielink注册（选MA Latin American Studies，CROHO 60174），需有效护照或欧洲ID",
+      "1-2天内收ULCN账号邮件，登录uSis上传材料完成申请",
+      "在线支付€100申请费（国际学位；同学年最多申3个项目/方向）",
+      "需签证者2027-04-01前、其他2027-05-15前完成Studielink+uSis提交（23:59 CET）",
+      "提交后在uSis选择是否申请住宿/签证/奖学金（各有更早截止）；录取决定约4-6周",
+      "（有条件）录取后尽早在uSis确认入学（confirm attendance，办签证前必须确认）",
+      "录取后按指引提交certified成绩单/文凭，办签证/居留许可，安排学费支付"],
+    note:"语言证明是关键路径，尽早与系里确认评估方式；学费27-28已公布：非EU €22,900/年" },
+
+  { order:14, stage:"P2", school:"Leiden", program:"MSc CADS Global Ethnography", tier:"主申",
+    open:{date:"2026-10-01",est:true,label:"~2026-10-01（Studielink常年规则）"}, deadline:{date:"2027-04-01",label:"2027-04-01（需签证；非签证5-15）"},
+    reason:"同上；可与LAS同批准备",
+    todos:[
+      "考IELTS 6.5（单项≥6.0）或TOEFL iBT 90（单项≥20）",
+      "备成绩单+文凭扫描件（未毕业附预计毕业日期+待完成课程清单）；非英/荷/德/法文需官方翻译",
+      "下载并填写CADS专用Questionnaire Master Application表格（动机说明含于问卷；推荐信/写作样本/研究提案非必需）",
+      "2026-10-01起在Studielink注册：先选MSc CADS（CROHO 60156），再在第4步选Global Ethnography方向；需有效护照或欧洲ID",
+      "收ULCN账号后登录uSis上传材料完成申请",
+      "在线支付€100申请费（国际学位；同学年最多申3个项目/方向）",
+      "需签证者2027-04-01前、其他2027-05-15前提交（23:59 CET；仅9月入学）",
+      "提交后在uSis选择住宿/签证/奖学金申请；录取决定约4-6周",
+      "（有条件）录取后在uSis确认入学、提交certified成绩单/文凭、办签证/居留并安排学费"],
+    note:"仅9月入学；申请费€100" },
+
+  { order:15, stage:"P2", school:"Leiden", program:"MA Latin American Studies (research)", tier:"冲刺", warn:true,
+    open:{date:"2026-10-01",est:true,label:"~2026-10-01（预计）"}, deadline:{date:"2027-04-01",est:true,label:"2027-04-01（需签证）——待确认"},
+    reason:"研究型2年，研究提案要求高，建议与#13二选一或明确主次",
+    todos:[
+      "先邮件系里确认项目是否仍招生（官网专页已404；以下按2025-04官网存档，供复招时参考）",
+      "成绩自评：本科均分需相当于荷兰制≥7.5，毕业论文≥8；需区域研究/社科基础及本科论文",
+      "写研究提案约1000词，附至少5条注释书目，注明1-2位意向导师",
+      "写动机信700-1500词，论证为何适合研究型硕士",
+      "备英文CV + 列出2位推荐人（至少1位学术，注明单位与邮箱）",
+      "备2封推荐信（至少1封学术；抬头纸+签名+完整联系方式）：可自行uSis上传或推荐人直送",
+      "考IELTS 6.5（单项≥6.0）或TOEFL iBT 90（单项≥20）；另备西/葡语证明：读C1，听/说/写B2",
+      "备成绩单+文凭扫描件；非英/荷/德/法文需官方翻译",
+      "Studielink注册（MA Latin American Studies (research)，CROHO 60844）→ uSis上传 → 付€100申请费",
+      "需签证者04-01前、其他05-15前提交；录取后uSis确认入学、交certified文件、办签证/居留"],
+    note:"⚠ 疑似停招：Leiden项目列表已无此项目、专页404（2026-09-12核查，其他research MA均在列）。若确认停招以#13替代" },
+
+  { order:16, stage:"P2", school:"EUR", program:"RMA Sociology of Culture, Media & the Arts", tier:"冲刺",
+    open:{date:"2026-10-01"}, deadline:{date:"2027-04-15",label:"2027-04-15（非EEA）/ 05-15（EEA）"},
+    reason:"截止最晚之一（4-15），研究型选拔材料可与UU/Leiden复用",
+    todos:[
+      "准备英文动机信（≤2页）",
+      "准备英文CV",
+      "准备写作样本：英文essay/paper 5-10页，附参考文献列表",
+      "联系推荐人准备2封推荐信（研究硕士必需）",
+      "考语言：IELTS 7.0（单项≥6.5）或TOEFL iBT 100（单项≥23）；成绩≤2年；非EEA录取后须2027-05-01前补交",
+      "准备本/硕学位证+含全部成绩的成绩单+平均分；非荷/英/德/法/意/西语文件须官方翻译",
+      "2026-10-01起在Studielink完成注册全部步骤",
+      "按邮件链接登录EUR Application Portal，回答问题并上传全部PDF材料；非EEA须2027-04-15前提交（申请费官网未提及，待确认）",
+      "查收结果：滚动审核（1月起评估，最晚7-01通知）；收到offer后3周内在Portal确认是否接受",
+      "有条件录取者补交：学位证+成绩单certified copies（2027-08-01前）；拿不到学位证的请学校开官方毕业证明并于08-31前发masteradmission@eshcc.eur.nl",
+      "4月初起在Studielink安排学费支付；非EEA按immigration通知办签证/居留；2027-08-31前完成最终注册"],
+    note:"27-28日期已正式公布；IELTS 7.0(单项6.5)/TOEFL 100(单项23)，不接受在线版/拼分；学费€21,000为26-27标准，27-28待公布" },
+
+  { order:17, stage:"P2", school:"Ghent", program:"MSc Sociology", tier:"保底",
+    open:{date:"2026-10-01",est:true,label:"2026-10（预计）"}, deadline:{date:"2027-04-01",label:"2027-04-01（需签证；非签证6-01）"},
+    reason:"英语B2可入学时补，门槛最低；但Qualification Check学历验证需时，务必提前",
+    todos:[
+      "确认要求：英语B2（最迟入学时提交）；需签证者截止2027-04-01，免签证者06-01",
+      "提前在 ghent.qualificationcheck.com 发起学位验证Qualification Check（€59，结果须直达根特大学，含已验证学位的申请才受理）",
+      "准备PDF材料：学位证、成绩单、文凭补充（diploma supplement）或官方课程描述、护照复印件；非荷/法/德/英文件须宣誓翻译",
+      "中国大陆学位者确认是否需APS审核（视资助来源/毕业院校可部分豁免；豁免者须邮件告知UGent China Platform姓名+生日+毕业院校）",
+      "2026-10网申开放后在OASIS在线提交并上传材料（根特无申请费）；可附动机信、CV等加分材料",
+      "未毕业者：改交学校官方在读证明（注明预计毕业日期+将获学位确切名称）+最新成绩单",
+      "等待审核（完整申请后平均约3个月），查收letter of admission",
+      "凭录取信申请签证、宿舍",
+      "入学时提交：经海牙认证（Apostille）的学位证副本+英语B2证明；未取得录取所依据的学位无法注册"],
+    note:"保底校；根特无申请费；Qualification Check €59；入学时须交海牙认证学位副本+英语B2证明" },
+
+  { order:18, stage:"P4", school:"UB", program:"Máster Estudios Latinoamericanos", tier:"保底",
+    open:{date:"2027-02-03",est:true,label:"~2027-02初（类推）"}, deadline:{date:"2027-04-22",est:true,label:"~2027-04-22（第一批，参照25-26：2-03至4-22）"},
+    reason:"27-28未公布；按上一周期类推第一批2月开4月关",
+    todos:[
+      "2026-12月起盯官网更新27-28批次（26-27：第一批2-02至4-20、第二批4-23至6-19、第三批6-26至7-17、第四批9-04至9-14）",
+      "提前4-8周办理学位证+成绩单翻译及海牙认证（非海牙公约国走教育部→外交部→西班牙领事馆认证）",
+      "非西语母语者考取西语B2证明（申请必需）",
+      "准备材料：学位证（或替代证明）复印件、成绩单、与选拔标准相关的补充材料（学术匹配4分、均分5分、其他1分）",
+      "批次开放后填写在线preinscripción并缴预审费€30.21（未缴费不受理）",
+      "查收邮件录取通知及官网名单（26-27第一批结果5-08起公布）",
+      "录取后与硕士协调员完成tutoría面谈，再在线办理automatrícula",
+      "注册时向学院秘书处（须预约）提交：护照/NIE、注册申请、tutoría签字文件、学位证、成绩单",
+      "外国学生另交：本国教育部出具的'学位可在本国攻读硕士'证明；非EEES未homologado学历缴UB学历对等审核费€216",
+      "所有非加/西/英语文件须附翻译，且为原件或带电子验证码（firma digital/CSV）"],
+    note:"学费82€/学分档=€4,920（25-26价，27-28待公布）；非西语母语须西语B2；预审费€30.21；第二批次参照4-24至6-20" },
+
+  { order:19, stage:"P4", school:"UCM", program:"Máster ECAL (Estudios Contemporáneos de América Latina)", tier:"保底",
+    open:{date:"2027-02-01",est:true,label:"~2027-02（类推）"}, deadline:{date:"2027-04-30",est:true,label:"多轮（27待公布）"},
+    reason:"27批次待公布；Fundación Carolina奖学金通常年初开放",
+    todos:[
+      "盯UCM招生页27-28批次（26-27：第一批1-28至2-20、第二批4-27至5-22、补录批9-01至9-04仅余位；ECAL分面授/线上两组）",
+      "准备护照（有NIE者优先用NIE注册）",
+      "准备CV：语言、其他学位、课程、实习/工作经历等均须附证明文件才被评分",
+      "准备学位证+宣誓翻译（traducción jurada）",
+      "准备官方成绩单（盖章签字）：科目/学分/成绩/平均分/发证日期，注明最低及最高及格分；非西语须原件+宣誓翻译同时上传",
+      "在西班牙教育部网站办理Equivalencia de Nota Media均分对等（办不出将按5/10最低分计）",
+      "开具'学位在本国可攻读硕士'证明信（可用UCM模板，无需认证）",
+      "考取西语B2或以上证明",
+      "写动机信（占评分5%；评分：成绩单60%、专业背景15%、工作经验15%、动机5%、其他5%）",
+      "批次开放后在UCM网申平台提交（外部邮箱为用户名；文件jpg/pdf单个<5Mb；申请费待确认）；通知经邮件发送",
+      "录取后完成Comprobación del Nivel de Formación：学位证+成绩单海牙/领事认证（先认证再宣誓翻译）+准入证明信+身份证件；resolución须按时上传否则取消资格",
+      "如申Carolina奖学金：在gestion.fundacioncarolina.es独立窗口申请（26年1-28开放；ECAL仅1个名额€900/月+机票+保险；面向拉美/葡萄牙公民，中国籍或不符资格，待确认）"],
+    note:"90 ECTS/3学期；面授/线上两组，线上班5月两周须到马德里（Escuela de Investigación）；Carolina 2026奖学金已于2026-01-28开放（印证年初窗口）" },
+
+  { order:20, stage:"P4", school:"UB", program:"Máster Sociología: TSI", tier:"保底",
+    open:{date:"2027-01-26",est:true,label:"~2027-01-26（类推）"}, deadline:{date:"2027-06-30",est:true,label:"~2027-06-30（第一轮，类推）"},
+    reason:"27-28未公布；按类推第一轮1月底开6月底关，时间最宽裕",
+    todos:[
+      "语言准备：西语B2+英语B1证明文件（无法提供时招生委员会可安排面试评估）",
+      "学历翻译+海牙/领事认证同#18，提前4-8周办理",
+      "准备材料：预注册申请、学位证复印件、成绩单（占评分40%）、CV（30%）、动机信（20%，可能加面试）、其他优势证明如交换/奖学金经历（10%）",
+      "2027-01-26左右开放后在线提交preinscripción并缴预审费€30.21（26-27：第一轮1-26至6-30；第二轮7-01至9-05仅有余位时）",
+      "查收电子录取通知；录取后学院Oficina de Másteres会联系告知注册步骤",
+      "注册前完成非EEES学历审核：homologación或UB学历对等comprobación（€216）；提交认证+翻译的学位证、成绩单、硕士准入证明",
+      "按指定日期在线automatrícula（逾期丢位）；学费€82/学分×90 ECTS=€7,380（非EU/中国且非西班牙居民；EU学生€19.37/学分）",
+      "无社会学背景者：开学前加修5学分补修课Bases del Análisis Sociológico（不计入90学分）"],
+    note:"75%西语/25%英语；90 ECTS×82€=€7,380（26-27价，27-28待公布）；第二批次7-01至9-05仅在有余额时开放" },
+];
+
+const STAGES = {
+  P0: { name:"P0", desc:"立即启动（9月）", color:"var(--p0)" },
+  P1: { name:"P1", desc:"10-11月投递", color:"var(--p1)" },
+  P2: { name:"P2", desc:"12-3月投递", color:"var(--p2)" },
+  P4: { name:"P4", desc:"2-6月收尾", color:"var(--p4)" },
+};
+const STATUS = ["未启动","准备中","已投递","已结束"];
+const LS = { status:"appBoard.status.", todos:"appBoard.todos.v2.", open:"appBoard.open." };
+
+const today = new Date(); today.setHours(0,0,0,0);
+const $ = s => document.querySelector(s);
+
+function daysLeft(dateStr){
+  const d = new Date(dateStr + "T00:00:00");
+  return Math.ceil((d - today) / 86400000);
+}
+function fmtDate(dateStr){
+  const d = new Date(dateStr + "T00:00:00");
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+function urgencyClass(days){
+  if (days < 0) return "var(--gray)";
+  if (days <= 30) return "var(--red)";
+  if (days <= 60) return "var(--orange)";
+  if (days <= 90) return "var(--yellow)";
+  return "var(--green)";
+}
+function getStatus(order){ return +(localStorage.getItem(LS.status + order) || 0); }
+function getTodos(order){
+  try { return JSON.parse(localStorage.getItem(LS.todos + order) || "[]"); } catch(e){ return []; }
+}
+function setTodos(order, arr){ localStorage.setItem(LS.todos + order, JSON.stringify(arr)); }
+
+/* ── 顶部统计 ── */
+function renderStats(){
+  const total = DATA.length;
+  const submitted = DATA.filter(p => getStatus(p.order) === 2).length;
+  const done = DATA.filter(p => getStatus(p.order) === 3).length;
+  const preparing = DATA.filter(p => getStatus(p.order) === 1).length;
+  // 最近未过期节点
+  let nearest = null;
+  DATA.forEach(p => {
+    [ {d:p.deadline.date, l:p.school+" 截止"},
+      p.scholarship && p.scholarship.date ? {d:p.scholarship.date, l:p.school+" "+p.scholarship.label} : null
+    ].filter(Boolean).forEach(n => {
+      const dl = daysLeft(n.d);
+      if (dl >= 0 && (!nearest || dl < nearest.dl)) nearest = {dl, l:n.l};
+    });
+  });
+  $("#stats").innerHTML = `
+    <div class="stat"><div class="num">${total}</div><div class="lbl">项目总数</div></div>
+    <div class="stat"><div class="num">${preparing}</div><div class="lbl">准备中</div></div>
+    <div class="stat"><div class="num">${submitted + done}</div><div class="lbl">已投递</div></div>
+    <div class="stat urgent"><div class="num">${nearest ? nearest.dl : "—"}</div><div class="lbl">最近节点(天)${nearest ? " · " + nearest.l : ""}</div></div>`;
+}
+
+/* ── 进度条 ── */
+function renderProgress(){
+  const total = DATA.length;
+  const submitted = DATA.filter(p => getStatus(p.order) >= 2).length;
+  const pct = Math.round(submitted / total * 100);
+  $("#progress-fill").style.width = pct + "%";
+  $("#progress-text").textContent = `${submitted}/${total} 已投递（${pct}%）`;
+
+  let tAll = 0, tDone = 0;
+  DATA.forEach(p => {
+    tAll += p.todos.length;
+    tDone += getTodos(p.order).filter(i => i < p.todos.length).length;
+  });
+  const tpct = tAll ? Math.round(tDone / tAll * 100) : 0;
+  $("#todo-fill").style.width = tpct + "%";
+  $("#todo-text").textContent = `${tDone}/${tAll}（${tpct}%）`;
+}
+
+/* ── 近期节点 ── */
+function renderTimeline(){
+  const nodes = [];
+  DATA.forEach(p => {
+    nodes.push({ date:p.deadline.date, est:p.deadline.est, what:`${p.school} ${p.program} · 申请截止` });
+    if (p.scholarship && p.scholarship.date)
+      nodes.push({ date:p.scholarship.date, est:p.scholarship.est, what:`${p.school} · ${p.scholarship.label}` });
+  });
+  nodes.sort((a,b) => a.date.localeCompare(b.date));
+  const upcoming = nodes.filter(n => daysLeft(n.date) >= 0).slice(0, 8);
+  $("#timeline").innerHTML = upcoming.map(n => {
+    const dl = daysLeft(n.date);
+    return `<div class="tl-item">
+      <div class="d">${n.est ? "~" : ""}${fmtDate(n.date)}</div>
+      <div class="what" title="${n.what}">${n.what}</div>
+      <div class="left" style="color:${urgencyClass(dl)}">${dl === 0 ? "今天！" : "剩 " + dl + " 天"}</div>
+    </div>`;
+  }).join("");
+}
+
+/* ── 看板 ── */
+const state = { stage:"all", tier:"all", sort:"order" };
+
+function renderBoard(){
+  const board = $("#board");
+  board.innerHTML = "";
+  Object.keys(STAGES).forEach(stageKey => {
+    if (state.stage !== "all" && state.stage !== stageKey) return;
+    let list = DATA.filter(p => p.stage === stageKey);
+    if (state.tier !== "all") list = list.filter(p => p.tier === state.tier);
+    list.sort(state.sort === "deadline"
+      ? (a,b) => a.deadline.date.localeCompare(b.deadline.date)
+      : (a,b) => a.order - b.order);
+
+    const st = STAGES[stageKey];
+    const col = document.createElement("div");
+    col.className = "col";
+    col.innerHTML = `
+      <div class="col-head" style="background:${st.color}">
+        <span class="stage">${st.name}</span><span class="desc">${st.desc}</span><span class="cnt">${list.length}</span>
+      </div>
+      <div class="col-body"></div>`;
+    const body = col.querySelector(".col-body");
+    if (!list.length) body.innerHTML = `<div class="empty-hint">无匹配项目</div>`;
+    list.forEach(p => body.appendChild(renderCard(p)));
+    board.appendChild(col);
+  });
+}
+
+function renderCard(p){
+  const dl = daysLeft(p.deadline.date);
+  const dlColor = urgencyClass(dl);
+  const status = getStatus(p.order);
+  const checked = getTodos(p.order);
+  const doneCnt = checked.filter(i => i < p.todos.length).length;
+  const isOpen = localStorage.getItem(LS.open + p.order) === "1";
+
+  const card = document.createElement("div");
+  card.className = "card" + (isOpen ? " open" : "");
+  card.innerHTML = `
+    <div class="card-top">
+      <span class="ord">#${p.order}</span>
+      <div class="name" title="点击展开/收起详情">
+        <div class="school">${p.school}</div>
+        <div class="program">${p.program}</div>
+      </div>
+      <span class="tier ${p.tier}">${p.tier}</span>
+      ${p.warn ? `<span class="tier" style="background:#8b1a1a">⚠ 待确认</span>` : ""}
+    </div>
+    <div class="ddl-line">
+      <span class="days" style="color:${dlColor}">${dl < 0 ? "已过" : dl}<small>${dl < 0 ? "" : "天"}</small></span>
+      <span class="date">截止 ${p.deadline.label || ((p.deadline.est ? "~" : "") + fmtDate(p.deadline.date))}</span>
+    </div>
+    <div class="meta"><span class="k">开放</span><span class="v">${p.open.label || ((p.open.est ? "~" : "") + fmtDate(p.open.date))}</span></div>
+    ${p.scholarship ? `<div class="meta schol"><span class="k">节点</span><span class="v">${p.scholarship.label} ${p.scholarship.date ? (p.scholarship.est ? "~" : "") + fmtDate(p.scholarship.date) : ""}${p.scholarship.date ? `（<span class="left-tag" style="color:${urgencyClass(daysLeft(p.scholarship.date))}">${daysLeft(p.scholarship.date) < 0 ? "已过" : "剩" + daysLeft(p.scholarship.date) + "天"}</span>）` : ""}</span></div>` : ""}
+    <div class="card-foot">
+      <select class="status s${status}">
+        ${STATUS.map((s,i) => `<option value="${i}" ${i === status ? "selected" : ""}>${s}</option>`).join("")}
+      </select>
+      <span class="todo-mini">待办 ${doneCnt}/${p.todos.length} ▾</span>
+    </div>
+    <div class="details">
+      <div class="sec"><div class="sec-t">为什么排这里</div><div class="reason">${p.reason}</div></div>
+      <div class="sec"><div class="sec-t">启动前必须完成（点击勾选）</div>
+        <ul class="todos">
+          ${p.todos.map((t,i) => `<li data-i="${i}" class="${checked.includes(i) ? "done" : ""}"><input type="checkbox" ${checked.includes(i) ? "checked" : ""}><span>${t}</span></li>`).join("")}
+        </ul>
+      </div>
+      ${p.note ? `<div class="sec"><div class="sec-t">备注</div><div class="note">${p.note}</div></div>` : ""}
+    </div>`;
+
+  // 事件
+  card.querySelector(".name").addEventListener("click", () => toggleOpen(card, p.order));
+  card.querySelector(".todo-mini").addEventListener("click", () => toggleOpen(card, p.order));
+  card.querySelector("select.status").addEventListener("change", e => {
+    localStorage.setItem(LS.status + p.order, e.target.value);
+    e.target.className = "status s" + e.target.value;
+    renderStats(); renderProgress();
+  });
+  card.querySelectorAll(".todos li").forEach(li => {
+    li.addEventListener("click", e => {
+      e.preventDefault();
+      const i = +li.dataset.i;
+      let arr = getTodos(p.order);
+      arr = arr.includes(i) ? arr.filter(x => x !== i) : [...arr, i];
+      setTodos(p.order, arr);
+      li.classList.toggle("done", arr.includes(i));
+      li.querySelector("input").checked = arr.includes(i);
+      card.querySelector(".todo-mini").textContent =
+        `待办 ${arr.filter(x => x < p.todos.length).length}/${p.todos.length} ▾`;
+      renderProgress();
+    });
+  });
+  return card;
+}
+
+function toggleOpen(card, order){
+  card.classList.toggle("open");
+  localStorage.setItem(LS.open + order, card.classList.contains("open") ? "1" : "0");
+}
+
+/* ── 筛选 / 排序 ── */
+function bindChips(id, key){
+  $(id).addEventListener("click", e => {
+    const chip = e.target.closest(".chip"); if (!chip) return;
+    $(id).querySelectorAll(".chip").forEach(c => c.classList.remove("on"));
+    chip.classList.add("on");
+    state[key] = chip.dataset.v;
+    renderBoard();
+  });
+}
+bindChips("#stage-filter", "stage");
+bindChips("#tier-filter", "tier");
+$("#sort").addEventListener("change", e => { state.sort = e.target.value; renderBoard(); });
+
+renderStats();
+renderProgress();
+renderTimeline();
+renderBoard();
+</script>
+</body>
+</html>
