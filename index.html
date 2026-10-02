@@ -528,7 +528,7 @@ const DATA = [
       "查收结果：滚动审核（1月起评估，最晚7-01通知）；收到offer后3周内在Portal确认是否接受",
       "有条件录取者补交：学位证+成绩单certified copies（2027-08-01前）；拿不到学位证的请学校开官方毕业证明并于08-31前发masteradmission@eshcc.eur.nl",
       "4月初起在Studielink安排学费支付；非EEA按immigration通知办签证/居留；2027-08-31前完成最终注册"],
-    note:"27-28日期已正式公布；IELTS 7.0(单项6.5)/TOEFL 100(单项23)，不接受在线版/拼分；学费€21,000为26-27标准，27-28待公布" },
+    note:"27-28日期已正式公布；IELTS 7.0(单项6.5)/TOEFL 100(单项23)，不接受在线版/拼分；学费€21,000为26-27标准，27-28待公布；⚠ 学位认证副本须 2027-08-01 前到（6月毕业时间紧，'毕业证明8-31替代'未获 ESHCC 确认需邮件问）" },
 
   { order:17, stage:"P2", school:"Ghent", program:"MSc Sociology", tier:"保底",
     open:{date:"2026-10-01",est:true,label:"2026-10（预计）"}, deadline:{date:"2027-04-01",label:"2027-04-01（需签证；非签证6-01）"},
@@ -543,7 +543,7 @@ const DATA = [
       "等待审核（完整申请后平均约3个月），查收letter of admission",
       "凭录取信申请签证、宿舍",
       "入学时提交：经海牙认证（Apostille）的学位证副本+英语B2证明；未取得录取所依据的学位无法注册"],
-    note:"保底校；根特无申请费；Qualification Check €59；入学时须交海牙认证学位副本+英语B2证明" },
+    note:"保底校；根特无申请费；Qualification Check €59（2025-10 起新申请改用在线核验替代海牙认证，适用路径待确认）；注册时必须已持证（未持证不能 enrol）+英语B2证明" },
 
   { order:18, stage:"P4", school:"UB", program:"Máster Estudios Latinoamericanos", tier:"保底",
     open:{date:"2027-02-03",est:true,label:"~2027-02初（类推）"}, deadline:{date:"2027-04-22",est:true,label:"~2027-04-22（第一批，参照25-26：2-03至4-22）"},
@@ -561,9 +561,9 @@ const DATA = [
       "所有非加/西/英语文件须附翻译，且为原件或带电子验证码（firma digital/CSV）"],
     note:"学费82€/学分档=€4,920（25-26价，27-28待公布）；非西语母语须西语B2；预审费€30.21；第二批次参照4-24至6-20" },
 
-  { order:19, stage:"P4", school:"UCM", program:"Máster ECAL (Estudios Contemporáneos de América Latina)", tier:"保底",
-    open:{date:"2027-02-01",est:true,label:"~2027-02（类推）"}, deadline:{date:"2027-04-30",est:true,label:"多轮（27待公布）"},
-    reason:"27批次待公布；Fundación Carolina奖学金通常年初开放",
+  { order:19, stage:"P4", school:"UCM", program:"Máster ECAL (Estudios Contemporáneos de América Latina)", tier:"保底", warn:true,
+    open:{date:"2027-02-01",est:true,label:"~2027-02（类推）"}, deadline:{date:"2027-04-30",est:true,label:"⚠ 27fall 不可申（须申请时已持证）"},
+    reason:"⚠ 硬规则：非EEES学位（含中国）申请时必须已持证——2027-06 毕业赶不上 1-28至2-20 / 4-27至5-22 任何批次，只能申 2028-29",
     todos:[
       "盯UCM招生页27-28批次（26-27：第一批1-28至2-20、第二批4-27至5-22、补录批9-01至9-04仅余位；ECAL分面授/线上两组）",
       "准备护照（有NIE者优先用NIE注册）",
@@ -577,7 +577,7 @@ const DATA = [
       "批次开放后在UCM网申平台提交（外部邮箱为用户名；文件jpg/pdf单个<5Mb；申请费待确认）；通知经邮件发送",
       "录取后完成Comprobación del Nivel de Formación：学位证+成绩单海牙/领事认证（先认证再宣誓翻译）+准入证明信+身份证件；resolución须按时上传否则取消资格",
       "如申Carolina奖学金：在gestion.fundacioncarolina.es独立窗口申请（26年1-28开放；ECAL仅1个名额€900/月+机票+保险；面向拉美/葡萄牙公民，中国籍或不符资格，待确认）"],
-    note:"90 ECTS/3学期；面授/线上两组，线上班5月两周须到马德里（Escuela de Investigación）；Carolina 2026奖学金已于2026-01-28开放（印证年初窗口）" },
+    note:"⚠ 硬规则（2026-27 总章程核实）：非EEES学位（含中国）申请时必须已持证，不接受在读/预期毕业——27fall 批次全部赶不上，2027-06 毕业后申 2028-29。90 ECTS/3学期；面授/线上两组，线上班5月两周须到马德里；Carolina 奖学金通常年初开放" },
 
   { order:20, stage:"P4", school:"UB", program:"Máster Sociología: TSI", tier:"保底",
     open:{date:"2027-01-26",est:true,label:"~2027-01-26（类推）"}, deadline:{date:"2027-06-30",est:true,label:"~2027-06-30（第一轮，类推）"},
@@ -622,6 +622,28 @@ const URLS = {
   18:"https://www.ub.edu/master-estudios-latinoamericanos/",
   19:"https://www.ucm.es/ecal/",
   20:"https://www.ub.edu/school-sociology/ca/programmes/master/",
+};
+const GRAD = {
+  1:"在读可申：网申选'学位进行中'+最新成绩单即可；注册前须交齐正式成绩单（含学位证明），否则不能注册",
+  2:"在读可申：交当前非正式成绩单；录取后按 offer 交显示毕业证明的最终正式成绩单（日期见 offer letter）",
+  3:"在读可申：交最新成绩单；conditional offer 须确认学位授予，最终成绩单寄至系研招办（日期见 offer）",
+  4:"在读可申：交最新官方成绩单；conditional 者最终成绩单+学位证 9 月中前补交（语言证书 5-30 前）",
+  5:"同 ANSO：最终成绩单+学位证 9 月中前补交（语言证书 5-30 前）",
+  6:"最后一年可申（conditional）：正式成绩单+教务处签发的最后一年在读证明；学期开始注册时出示学位/完整成绩单",
+  7:"同瑞典统一规则：最后一年可申（正式成绩单+在读证明）；学期开始注册时出示学位证明",
+  8:"在读可申：交未完成课程清单；anticipated degree 证明 2027-06-15 前，certified 学位证副本 2027-09-01 前",
+  9:"在读可申：申报学位 in progress+预计完成日期；接受录取后由发证机构直寄正式文件（日期见 offer）",
+  10:"在读可申；最终成绩单+文凭由校方直发 apply-gsss@uva.nl，最迟 2027-08-01（毕业证明可替代，完成日期≤8-31）",
+  11:"在读可申：签'开课前取得学位'声明+临时成绩单；9 月注册时交验原件",
+  12:"在读可申：交官方中期成绩单；注册前（8-17至9-16）须完成 degree verification 学历核验",
+  13:"在读可申：注明预计毕业日期+待完成课程清单；certified 最终成绩单+毕业证明 2027-09-01 前；需签证者 6-07 前交语言+预计毕业证明（可用学信网验证报告）",
+  14:"同 LAS：certified 最终成绩单+毕业证明（毕业日期须在 9-01 开学前）",
+  15:"同 LAS：certified 最终成绩单+毕业证明（毕业日期须在 9-01 开学前）（项目疑似停招，先确认开设状态）",
+  16:"在读可申；⚠ certified 学位证+成绩单副本须 2027-08-01 前到（6月毕业时间紧）；'毕业证明 8-31 替代'未获 ESHCC 确认，需邮件问",
+  17:"在读可申：交校方预计毕业声明+最新成绩单；注册时必须已持证（未持证不能 enrol）；2025-10 起 Qualification Check 在线核验替代海牙认证（路径待确认）",
+  18:"preinscripción 可无学位（须 matrícula 前取得）；matrícula（9月）时学位须宣誓翻译+海牙认证",
+  19:"⚠ 27fall 不可申：非EEES学位（含中国）申请时必须已持证，2027-06 毕业赶不上任何批次；只能申 2028-29",
+  20:"同 UB 规则：matrícula 前取得即可；9 月注册时学位须认证+翻译",
 };
 const LS = { status:"appBoard.status.", todos:"appBoard.todos.v2.", open:"appBoard.open." };
 
@@ -773,6 +795,7 @@ function renderCard(p){
     </div>
     <div class="details">
       <div class="sec"><div class="sec-t">为什么排这里</div><div class="reason">${p.reason}</div></div>
+      ${GRAD[p.order] ? `<div class="sec"><div class="sec-t">学位时间要求（你 2027-06 毕业）</div><div class="reason">${GRAD[p.order]}</div></div>` : ""}
       <div class="sec"><div class="sec-t">启动前必须完成（点击勾选）</div>
         <ul class="todos">
           ${p.todos.map((t,i) => `<li data-i="${i}" class="${checked.includes(i) ? "done" : ""}"><input type="checkbox" ${checked.includes(i) ? "checked" : ""}><span>${t}</span></li>`).join("")}
@@ -845,7 +868,7 @@ const CANDIDATES = [
   { region:"德国 · 拉美研究方向", school:"Heidelberg (HCIAS)", program:"MA Communication and Society in Ibero-America", degree:"MA · 2年（10月或4月入学）", lang:"英语+西班牙语", tuition:"€1,500/学期（可申请豁免）", deadline:"4-01至9-30滚动（10月入学）", ielts:"英语C1（雅思7.0满足）+西语B1（第2学期末前补）", fit:"strong", prereq:"人文或社科学士即可，无学分门槛", funding:"可申请非EU学费豁免", why:"英西双语伊比利亚美洲研究，语言组合与你完美匹配", source:"https://www.hcias.uni-heidelberg.de/en/hcias-academic-programs/ma-communication-and-society-in-ibero-america/application" },
 
   // ── 拉美本土 ──
-  { region:"拉美本土 · 8-10月开学（合27Fall）", school:"UNAM（墨西哥）", program:"Maestría en Estudios Latinoamericanos", degree:"Maestría · 2年（8月入学，面授）", lang:"西班牙语", tuition:"基本免学费（象征性注册费）", deadline:"简章约11月中刊出（26级为2025-11-18），1月网上注册，3月论文考试，4月面试，6月出结果，8月入学", ielts:"⚠ 西语仅认 EXELEAA 或 SIELE（DELE 不认，EXELEAA 可远程线上考 MXN 2,540）；另须母语及第二外语证明，由 UNAM 语言中心（ENALLT/DELEFYL）出具", fit:"strong", prereq:"本科成绩换算≥8.5/10（86分可达线）；研究计划（protocolo）+遴选考核", funding:"CONAHCYT 国家硕士奖学金（国际生可申）", why:"拉美研究旗舰、免学费。考核四阶段：①1月网上注册交材料 ②3月中发题写4-7页批评论文（在家按窗口提交，非限时坐考）③4月面试（默认线下，特殊情况才线上）④6月出结果；录取后7-8月须本人到墨西哥城交原件。你2027-06毕业刚好衔接8月入学，但7-8月交原件需毕业证一下来即办海牙认证（时间紧）；未毕业能否用在读证明注册待确认", source:"https://latinoamericanos.posgrado.unam.mx/admision/informacion-convocatoria/" },
+  { region:"拉美本土 · 8-10月开学（合27Fall）", school:"UNAM（墨西哥）", program:"Maestría en Estudios Latinoamericanos", degree:"Maestría · 2年（8月入学，面授）", lang:"西班牙语", tuition:"基本免学费（象征性注册费）", deadline:"简章约11月中刊出（26级为2025-11-18），1月网上注册，3月论文考试，4月面试，6月出结果，8月入学", ielts:"⚠ 西语仅认 EXELEAA 或 SIELE（DELE 不认，EXELEAA 可远程线上考 MXN 2,540）；另须母语及第二外语证明，由 UNAM 语言中心（ENALLT/DELEFYL）出具", fit:"strong", prereq:"本科成绩换算≥8.5/10（86分可达线）；研究计划（protocolo）+遴选考核；⚠ 简章要求 etapa1 注册时已完成 100% 学分，最后一学期在读能否申请需邮件确认（convocatoria.ppel@gmail.com）", funding:"CONAHCYT 国家硕士奖学金（国际生可申）", why:"拉美研究旗舰、免学费。考核四阶段：①1月网上注册交材料 ②3月中发题写4-7页批评论文（在家按窗口提交，非限时坐考）③4月面试（默认线下，特殊情况才线上）④6月出结果；录取后7-8月须本人到墨西哥城交原件（不接受后补承诺函）。你2027-06毕业刚好衔接8月入学，但交原件需毕业证一下来即办海牙认证（时间紧）", source:"https://latinoamericanos.posgrado.unam.mx/admision/informacion-convocatoria/" },
   { region:"拉美本土 · 8-10月开学（合27Fall）", school:"FLACSO México", program:"Maestría en Ciencias Sociales", degree:"Maestría · 2年（9月入学）", lang:"西班牙语", tuition:"低（以当年简章为准）", deadline:"参照11月底截止（曾延至1月中）", ielts:"西语授课", fit:"ok", prereq:"社科背景；EXANI III + 校考 + 研究计划", funding:"SNP 目录项目，可申 CONAHCYT", why:"FLACSO 旗舰社科硕士，区域研究氛围浓；遴选投入大", source:"https://www.flacso.edu.mx/maestria-en-ciencias-sociales/" },
   { region:"拉美本土 · 8-10月开学（合27Fall）", school:"FLACSO Ecuador", program:"Maestría en Sociología", degree:"Maestría · 20个月（10月入学，混合制）", lang:"西班牙语", tuition:"$7,500 全程 + $500 注册 + $30 申请", deadline:"参照6-8月申请", ielts:"西语授课", fit:"ok", prereq:"社科或相近背景+入学测试+面试", funding:"按经济评估最高100%奖学金", why:"社会学聚焦拉美现实，费用透明有全奖可能", source:"https://www.flacso.edu.ec/maestrias/maestria_en_sociologia" },
   { region:"拉美本土 · 3月开学（实为28spring）", school:"Universidad de Chile", program:"Magíster en Estudios Latinoamericanos", degree:"Magíster · 通常2年（3月开学）", lang:"西班牙语", tuition:"CLP 4,210,070/年 + 注册费 CLP 243,900（2026价）", deadline:"28spring：申请约2027-07-06至10-30（参照2027级官方窗口），2028-03入学——你2027-06毕业后申请正合适", ielts:"✅ DELE B2 明确接受（IELTS 5.5-6.5 可抵英语 B2，你 7.0 超出）；也可签承诺书后补校内考试", fit:"strong", prereq:"人文/艺术/社科学位即可；写作样本+意向书；无需推荐信；无入学考试，材料审核+面试（11月，邮件单独通知）", funding:"校内首年50%学费减免（遴选）", why:"已核实官方指南：DELE B2 直接认、无笔试、申请费 USD 50、材料+面试即可；但 3 月开学属 28spring，需接受毕业后约 9 个月 GAP", source:"https://filosofia.uchile.cl/postgrados/6272/estudios-latinoamericanos" },
