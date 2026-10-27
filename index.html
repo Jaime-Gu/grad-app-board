@@ -254,7 +254,7 @@
   <div class="board" id="board"></div>
 
   <div class="writing-section">
-    <div class="cand-title">文书要求总表（主清单 20 项）</div>
+    <div class="cand-title">文书要求总表（主清单 21 项）</div>
     <div class="cand-sub">含所有需要撰写/填写的文字材料（statement、proposal、writing sample、动机信、课程描述、问卷、奖学金文书、CV）。推荐信由推荐人撰写，不列入。数据来自 2026-09 官网核查；27-28 未公布的项目按上一周期要求。</div>
     <table class="wtable"><tbody id="writing-body"></tbody></table>
   </div>
@@ -593,6 +593,22 @@ const DATA = [
       "按指定日期在线automatrícula（逾期丢位）；学费€82/学分×90 ECTS=€7,380（非EU/中国且非西班牙居民；EU学生€19.37/学分）",
       "无社会学背景者：开学前加修5学分补修课Bases del Análisis Sociológico（不计入90学分）"],
     note:"75%西语/25%英语；90 ECTS×82€=€7,380（26-27价，27-28待公布）；第二批次7-01至9-05仅在有余额时开放" },
+
+  { order:21, stage:"P1", school:"Gothenburg", program:"MSc Sociology (S2SOC)", tier:"主申",
+    open:{date:"2026-10-16",label:"2026-10-16（官方）"}, deadline:{date:"2027-01-15",label:"2027-01-15（码 GU-75002）"},
+    scholarship:{label:"Letter of intent / CV 上传（非EU）", date:"2027-02-03"},
+    reason:"与 Stockholm、GU Global Studies 同平台同截止，可同批操作；社会学系（Sociology and Work Science）研究型 2 年，含硕士论文",
+    todos:[
+      "核对资格：社会科学学士或同等学历（180 学分）——西语主修+社会学辅修需用 Letter of intent 论证等同性（主要风险点）",
+      "考英语：IELTS 6.5（单项≥5.5）或 TOEFL iBT 90（写作≥20）",
+      "在 universityadmissions.se 同一账户加报（申请码 GU-75002），与 Stockholm 等一次投递并排序",
+      "按平台中国指南准备 official 成绩单+学位证（CSSD 系列文件）",
+      "2026-10-16 至 2027-01-15 提交网申",
+      "缴申请费 SEK 900（非EU/EEA，一次覆盖同学期所有志愿）",
+      "按官网申请说明页的指定文档撰写 Letter of intent / CV，非EU 2027-02-03 前上传",
+      "2027-02-01 前补齐其他材料并确保缴费到账",
+      "提交后查结果；录取后办居留许可并缴学费（首期 48,500 SEK）"],
+    note:"⚠ 要求社会科学学士或同等学历（180 学分），社会学本科申请者优先——你的背景需用 Letter of intent/CV 论证等同性。27-28 日期已公布；另有第二轮 2027-03-15 至 04-15（码 GU-75003）。学费 194,000 SEK 全程（首期 48,500）；英语 English 6" },
 ];
 
 const STAGES = {
@@ -622,6 +638,7 @@ const URLS = {
   18:"https://www.ub.edu/master-estudios-latinoamericanos/",
   19:"https://www.ucm.es/ecal/",
   20:"https://www.ub.edu/school-sociology/ca/programmes/master/",
+  21:"https://www.gu.se/en/study-gothenburg/programme-for-master-in-sociology-s2soc",
 };
 const GRAD = {
   1:"在读可申：网申选'学位进行中'+最新成绩单即可；注册前须交齐正式成绩单（含学位证明），否则不能注册",
@@ -643,6 +660,7 @@ const GRAD = {
   18:"preinscripción 可无学位（须 matrícula 前取得）；matrícula（9月）时学位须宣誓翻译+海牙认证",
   19:"⚠ 27fall 不可申：非EEES学位（含中国）申请时必须已持证，2027-06 毕业赶不上任何批次；只能申 2028-29",
   20:"同 UB 规则：matrícula 前取得即可；9 月注册时学位须认证+翻译",
+  21:"同瑞典统一规则：最后一年可申（正式成绩单+在读证明）；学期开始注册时出示学位证明",
 };
 const WRITING = {
   1:[
@@ -766,6 +784,10 @@ const WRITING = {
     "2 封推荐信：大学教师或研究人员（2025-26 存档要求；现行索引亦显示学术或专业领域推荐人信件），未规定格式/篇幅",
     "在线预注册申请；未列研究提案或写作样本；评分另含成绩单 40%（还考虑原大学及排名）+其他资格 10%",
   ],
+  21:[
+    "Letter of intent / CV：必须按官网申请说明页的指定文档撰写并上传（非EU 2027-02-03 前）；选拔=学术与职业优点+该信/CV 综合评估，社会学本科申请者优先",
+    "无其他文书：无写作样本/研究提案/推荐信要求",
+  ],
 };
 const CERT = {
   1:{gpa:"中国四年制 overall B+（通常85%；211 为 B=80%），浙大86达线；社会学另要求高阶/社会学课程 first-class（80%）——总均分不能替代逐门核算；成绩单须附 grading scale", cert:"申请时上传 official 成绩单扫描件（正反面+评分说明）+认证英译；录取后由院校直寄/密封或安全电子递交正式件；中国可走 CSSD 电子发送至 graduate.ts@ubc.ca（可选渠道，未接到指示前勿寄正式件）"},
@@ -787,6 +809,7 @@ const CERT = {
   18:{gpa:"评分=学术匹配4+均分5+附加1；无公开换算；Equivalencia de Nota Media 未明确预注册必交（general scholarship 注册时须交）", cert:"预注册可未合法化复印件；注册前非EEES未homologado学历：海牙/领事认证+UB comprobación（2026-27 为 €218.15 非 €216）+硕士准入证明；非西/加/英文件须合法化后官方翻译"},
   19:{gpa:"评分=成绩单60%+专门培训15%+职业经历15%+动机5%+其他5%；申请时必须办西班牙教育部 Equivalencia de Nota Media（逐门录入课程学分成绩，下载无 borrador 水印的正式 PDF；办不出按5/10计）", cert:"⚠ 申请时须已持证（非EEES）；录取后 Comprobación：学位证/成绩单原件海牙认证+西语宣誓翻译（先认证后翻译）；可用 QR 海牙认证邮件或领馆 GEISER；UCM 未列 €216 费用"},
   20:{gpa:"评分=成绩单40%（含原大学排名）+CV30%+动机信/面试20%+其他10%；Equivalencia 是否必交需邮件确认", cert:"2025-26 存档：申请时交 certified copy；注册按非EEES规则海牙认证+UB comprobación（€218.15）+准入证明+合法化后官方翻译；应届生资格（Admite no titulados=No 与接受在读成绩单并存）需邮件确认"},
+  21:{gpa:"要求社会科学学士或同等学历（180 学分）；无中国百分制最低线/换算；选拔为学术与职业优点+Letter of intent/CV 综合评估，社会学本科申请者优先", cert:"同瑞典统一中国学历规则（CSSD 系列文件）"},
 };
 const LS = { status:"appBoard.status.", todos:"appBoard.todos.v2.", open:"appBoard.open." };
 
