@@ -181,6 +181,20 @@
   .ccard .cbody b { color: var(--ink-3); font-weight: 600; }
   .ccard a { color: var(--tier-zhu); word-break: break-all; }
 
+  /* ── 文书要求总表 ── */
+  .writing-section { margin-top: 28px; }
+  .wtable { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; font-size: 12px; }
+  .wtable td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .wtable tr:last-child td { border-bottom: none; }
+  .wtable tr:nth-child(even) td { background: #fafbfd; }
+  .wtable .wp { width: 200px; }
+  .wtable .wp .s { font-weight: 700; }
+  .wtable .wp .p { color: var(--ink-2); font-size: 11px; margin-top: 2px; }
+  .wtable .wp .ord { color: var(--ink-3); font-size: 11px; font-weight: 700; }
+  .wtable ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .wtable li { padding-left: 14px; position: relative; color: var(--ink-2); }
+  .wtable li::before { content: "·"; position: absolute; left: 0; color: var(--tier-zhu); font-weight: 700; }
+
   footer { margin-top: 26px; color: var(--ink-3); font-size: 11.5px; line-height: 1.7; }
   .empty-hint { color: var(--ink-3); font-size: 12px; text-align: center; padding: 14px 0; }
 </style>
@@ -238,6 +252,12 @@
   </div>
 
   <div class="board" id="board"></div>
+
+  <div class="writing-section">
+    <div class="cand-title">文书要求总表（主清单 20 项）</div>
+    <div class="cand-sub">含所有需要撰写/填写的文字材料（statement、proposal、writing sample、动机信、课程描述、问卷、奖学金文书、CV）。推荐信由推荐人撰写，不列入。数据来自 2026-09 官网核查；27-28 未公布的项目按上一周期要求。</div>
+    <table class="wtable"><tbody id="writing-body"></tbody></table>
+  </div>
 
   <div class="cand-section">
     <div class="cand-title">候选池 · 调研新增（不在 v9 清单内）</div>
@@ -645,6 +665,116 @@ const GRAD = {
   19:"⚠ 27fall 不可申：非EEES学位（含中国）申请时必须已持证，2027-06 毕业赶不上任何批次；只能申 2028-29",
   20:"同 UB 规则：matrícula 前取得即可；9 月注册时学位须认证+翻译",
 };
+const WRITING = {
+  1:[
+    "Statement of Academic Goals（学术目标陈述）：500–1000 词，写研究问题、理论传统、方法技能、意向导师及契合度",
+    "准备度说明：≤500 词，仅非社会学背景需交（相关课程/阅读/研究经历）",
+    "写作样本：高年级课程主论文或同等学术作品（PDF，官网无明确页数限制）",
+    "CV",
+  ],
+  2:[
+    "Personal Statement：≤1000 词，双倍行距（研究兴趣、意向导师、学术/职业规划；官网明确勿用生成式 AI）",
+    "写作样本：英/法文研究论文 ≤30 页，双倍行距",
+    "CV",
+  ],
+  3:[
+    "Statement of Interest（研究陈述）：1 页单倍行距（可另加 1 页参考文献），阐明研究议程与 UofT 社会学系 faculty fit",
+    "Personal Statement（可选）：1 页单倍行距，个人经历/背景与多样性贡献",
+    "写作样本：10–25 页、双倍行距、本人独立原创，可两篇较小论文拼合",
+    "CV",
+    "OGS 奖学金申请（独立文书，含研究计划）：申请季同步提交，副本发系研招办 sociology.graduate@utoronto.ca",
+  ],
+  4:[
+    "动机信：≤800 词，英文或法文（为何选择该校该项目、个人经历与未来目标）",
+    "CV（英/法，建议 ≤2 页）",
+    "如申 financial aid：经济需求说明信约 1 页（英/法）+ 本人及父母收入证明",
+  ],
+  5:[
+    "动机信：≤800 词（英/法，须结合所选 specialisation 方向写）",
+    "CV（英/法，建议 ≤2 页）",
+    "如申 financial aid：经济需求说明信约 1 页 + 收入证明",
+  ],
+  6:[
+    "动机信：必须用社会学系指定 jotform 在线表单撰写（含 research ideas），提交后从邮件收 PDF 再上传 universityadmissions.se（每学期须重新生成，02-01 前上传，缺信不予评估）",
+    "无需其他文书（选拔=成绩50+动机信50+课程相关度100）",
+  ],
+  7:[
+    "无需任何文书：不要动机信/CV/推荐信，仅按大学学分排名选拔（勿上传未要求材料）",
+  ],
+  8:[
+    "动机陈述：用官网 uu-motivation 表格撰写（含研究兴趣+方法训练）",
+    "CV",
+    "Methods & Statistics Checklist：官方表格填写，并附清单上每门课的教学大纲（英/荷语；其他语言须附自写英文摘要）",
+    "如申 NL Scholarship：动机说明 + 财务计划 + Statement of Financial Resources 表",
+  ],
+  9:[
+    "Statement of Intent：500–1000 词（双倍行距、12 号字、1 英寸边距，建议点名意向导师）",
+    "Research Statement：≤1000 词，须具体、引用相关文献、契合系内导师方向（将发展为研究提案，需打磨）",
+    "写作样本：独立作者英文论文 ≤7000 词（含参考文献）",
+    "CV",
+  ],
+  10:[
+    "动机信：约 750 词，说明申请动机及如何满足入学要求，并内含 3–4 个研究问题",
+    "写作样本：英文学术写作 3–5 页 A4（无现成英文样本需专门撰写，≤5 页）",
+    "课程描述：社会学理论+研究方法逐门英文撰写（课程内容/文献/学分/学习成果），合并为一个 PDF（对应 60 ECTS 先修审核）",
+    "CV（建议 Europass 格式，含在读课程与学分）",
+  ],
+  11:[
+    "英文动机信：最多 2 页（如走双学位须在信中明确声明）",
+    "CV",
+    "英语豁免说明信（如适用：英语母语或英语授课背景可替代 B2 证明）",
+  ],
+  12:[
+    "动机信：1 页 A4",
+    "CV",
+    "课程描述：与社会学及社会研究方法（定量+定性）最相关课程，每门约半页英文",
+    "英文学术论文：体现社科理论、方法论与学术写作能力（非 EEA 学历必需）",
+  ],
+  13:[
+    "Questionnaire Master Application：人文学院模板下载填写，说明专业知识与一般学术技能（动机说明含于问卷）",
+    "CV",
+    "推荐信/写作样本/研究提案均未列为必需",
+  ],
+  14:[
+    "CADS 专用 Questionnaire Master Application：说明在该方向已具备的知识/技能（动机说明含于问卷）",
+    "CV",
+    "推荐信/写作样本/研究提案均非必需",
+  ],
+  15:[
+    "研究提案：约 1000 词，附至少 5 条注释书目，说明拟研究领域并注明 1–2 位意向导师（2025-04 官网存档要求）",
+    "动机信：700–1500 词，论证申请动机与为何适合研究型硕士",
+    "CV（含教育/职业经历）",
+    "⚠ 项目疑似停招，先确认开设再准备",
+  ],
+  16:[
+    "英文动机信：≤2 页",
+    "CV",
+    "写作样本：英文 essay/paper 5–10 页，附参考文献列表",
+    "2 封推荐信（研究硕士必需，由推荐人撰写）",
+  ],
+  17:[
+    "无强制文书：可附动机信、CV 等加分材料（非必需）",
+    "文凭补充（diploma supplement）或官方课程描述 syllabus（学校无法提供时需自行整理）",
+  ],
+  18:[
+    "预注册表 + 学位证（或替代证明）复印件 + 成绩单",
+    "与选拔标准相关的补充材料：学术匹配度（≤4 分）、均分（≤5 分）、其他优势（≤1 分）——按评分表组织背景说明与证明文件，是否需动机信以当年公告为准",
+  ],
+  19:[
+    "CV：语言、其他学位、课程、实习/工作经历等均须附证明文件才被评分",
+    "动机信（carta de motivación，占评分 5%；总分=成绩单60%+专业背景15%+工作经验15%+动机5%+其他5%）",
+    "官方成绩单须注明最低及最高及格分（无则说明函）",
+    "Equivalencia de Nota Media 均分对等申请（西班牙教育部网站办理，办不出按 5/10 最低分计）",
+    "'学位在本国可攻读硕士'证明信（可用 UCM 模板，无需认证）",
+    "⚠ 27fall 不可申（须申请时已持证），此为 2028-29 准备清单",
+  ],
+  20:[
+    "动机信：占评分 20%（可能加面试）",
+    "CV：占评分 30%",
+    "其他优势证明：交换/奖学金经历等（占 10%）",
+    "预注册申请 + 学位证复印件 + 成绩单（占评分 40%）",
+  ],
+};
 const LS = { status:"appBoard.status.", todos:"appBoard.todos.v2.", open:"appBoard.open." };
 
 const today = new Date(); today.setHours(0,0,0,0);
@@ -945,6 +1075,15 @@ $("#fit-filter").addEventListener("click", e => {
   renderCandidates(chip.dataset.v);
 });
 renderCandidates("all");
+
+function renderWriting(){
+  $("#writing-body").innerHTML = DATA.map(p => `
+    <tr>
+      <td class="wp"><span class="ord">#${p.order}</span> <span class="s">${p.school}</span><div class="p">${p.program}</div></td>
+      <td><ul>${WRITING[p.order].map(w => `<li>${w}</li>`).join("")}</ul></td>
+    </tr>`).join("");
+}
+renderWriting();
 
 renderStats();
 renderProgress();
