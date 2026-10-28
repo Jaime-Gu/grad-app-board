@@ -254,7 +254,7 @@
   <div class="board" id="board"></div>
 
   <div class="writing-section">
-    <div class="cand-title">文书要求总表（主清单 21 项）</div>
+    <div class="cand-title">文书要求总表（主清单 20 项）</div>
     <div class="cand-sub">含所有需要撰写/填写的文字材料（statement、proposal、writing sample、动机信、课程描述、问卷、奖学金文书、CV）。推荐信由推荐人撰写，不列入。数据来自 2026-09 官网核查；27-28 未公布的项目按上一周期要求。</div>
     <table class="wtable"><tbody id="writing-body"></tbody></table>
   </div>
@@ -498,22 +498,6 @@ const DATA = [
       "（有条件）录取后在uSis确认入学、提交certified成绩单/文凭、办签证/居留并安排学费"],
     note:"仅9月入学；申请费€100" },
 
-  { order:15, stage:"P2", school:"Leiden", program:"MA Latin American Studies (research)", tier:"冲刺", warn:true,
-    open:{date:"2026-10-01",est:true,label:"~2026-10-01（预计）"}, deadline:{date:"2027-04-01",est:true,label:"2027-04-01（需签证）——待确认"},
-    reason:"研究型2年，研究提案要求高，建议与#13二选一或明确主次",
-    todos:[
-      "先邮件系里确认项目是否仍招生（官网专页已404；以下按2025-04官网存档，供复招时参考）",
-      "成绩自评：本科均分需相当于荷兰制≥7.5，毕业论文≥8；需区域研究/社科基础及本科论文",
-      "写研究提案约1000词，附至少5条注释书目，注明1-2位意向导师",
-      "写动机信700-1500词，论证为何适合研究型硕士",
-      "备英文CV + 列出2位推荐人（至少1位学术，注明单位与邮箱）",
-      "备2封推荐信（至少1封学术；抬头纸+签名+完整联系方式）：可自行uSis上传或推荐人直送",
-      "考IELTS 6.5（单项≥6.0）或TOEFL iBT 90（单项≥20）；另备西/葡语证明：读C1，听/说/写B2",
-      "备成绩单+文凭扫描件；非英/荷/德/法文需官方翻译",
-      "Studielink注册（MA Latin American Studies (research)，CROHO 60844）→ uSis上传 → 付€100申请费",
-      "需签证者04-01前、其他05-15前提交；录取后uSis确认入学、交certified文件、办签证/居留"],
-    note:"⚠ 疑似停招：Leiden项目列表已无此项目、专页404（2026-09-12核查，其他research MA均在列）。若确认停招以#13替代" },
-
   { order:16, stage:"P2", school:"EUR", program:"RMA Sociology of Culture, Media & the Arts", tier:"冲刺",
     open:{date:"2026-10-01"}, deadline:{date:"2027-04-15",label:"2027-04-15（非EEA）/ 05-15（EEA）"},
     reason:"截止最晚之一（4-15），研究型选拔材料可与UU/Leiden复用",
@@ -632,7 +616,6 @@ const URLS = {
   12:"https://web.archive.org/web/20220922153107/https://soc.kuleuven.be/fsw/toekomstigestudenten/english/mos",
   13:"https://www.universiteitleiden.nl/en/education/study-programmes/master/latin-american-studies",
   14:"https://www.universiteitleiden.nl/en/education/study-programmes/master/cultural-anthropology-and-development-sociology/global-ethnography",
-  15:"https://www.universiteitleiden.nl/en/education/study-programmes/master/latin-american-studies-research",
   16:"https://www.eur.nl/en/research-master/sociology-culture-media-and-arts",
   17:"https://studiekiezer.ugent.be/2026/master-of-science-in-sociology-KMSOCY-en/starten",
   18:"https://www.ub.edu/master-estudios-latinoamericanos/",
@@ -654,7 +637,6 @@ const GRAD = {
   12:"在读可申：交官方中期成绩单；注册前（8-17至9-16）须完成 degree verification 学历核验",
   13:"在读可申：注明预计毕业日期+待完成课程清单；certified 最终成绩单+毕业证明 2027-09-01 前；需签证者 6-07 前交语言+预计毕业证明（可用学信网验证报告）",
   14:"同 LAS：certified 最终成绩单+毕业证明（毕业日期须在 9-01 开学前）",
-  15:"同 LAS：certified 最终成绩单+毕业证明（毕业日期须在 9-01 开学前）（项目疑似停招，先确认开设状态）",
   16:"在读可申；⚠ certified 学位证+成绩单副本须 2027-08-01 前到（6月毕业时间紧）；'毕业证明 8-31 替代'未获 ESHCC 确认，需邮件问",
   17:"在读可申：交校方预计毕业声明+最新成绩单；注册时必须已持证（未持证不能 enrol）；2025-10 起 Qualification Check 在线核验替代海牙认证（路径待确认）",
   18:"preinscripción 可无学位（须 matrícula 前取得）；matrícula（9月）时学位须宣誓翻译+海牙认证",
@@ -747,13 +729,6 @@ const WRITING = {
     "未毕业者：预计毕业日期 + 现有成绩单 + 剩余课程清单",
     "Visual Ethnography 的媒体实验题不适用于 Global Ethnography；官网未另列独立 CV、研究提案或写作样本",
   ],
-  15:[
-    "Research Proposal（存档）：约 1000 词，拟研究课题/领域 + 1–2 名可能指导教师 + 至少 5 项注释书目（annotated bibliography）",
-    "Motivation letter（存档）：700–1500 词，论证为何选择研究型硕士及为何是合适人选，结构清晰论证充分",
-    "CV：须含 2 名 referees 的机构隶属和电子邮箱（委员会可联系核实，非另交推荐信）",
-    "学士论文或等值写作成果：证明区域研究/文学/历史/社科基础及文献与研究能力",
-    "⚠ 项目疑似停招，以上为 2024-25 存档要求，先确认开设再准备",
-  ],
   16:[
     "英文 CV：PDF 上传，未规定页数",
     "英文 Essay or paper：5–10 页，主题自选（可用本科课程论文），展示学术写作和分析能力，必须附参考文献表",
@@ -803,7 +778,6 @@ const CERT = {
   12:{gpa:"无 GPA 最低线；成绩单无评分说明须补 grading table；QASS 方向另要统计+定量方法≥12 ECTS（与你背景不符，慎选该方向）", cert:"中国大陆申请时无需 APS；注册前 degree verification：CSSD 学位/学历在线验证报告，或校方核验邮件（含学生+申请号+成绩学位信息）；也可赴比现场验原件"},
   13:{gpa:"未公布最低均分/换算；招生委个案评估", cert:"录取后按 admission statement：在线验证或院校盖章认证复印件密封寄送（院校不能寄可按指引发官方邮箱；无法取得院校认证件时才走海牙替代）；CSSD 是否个案指定需邮件确认"},
   14:{gpa:"同 LAS：未公布最低均分；个案评估", cert:"同 Leiden 现行验证规则；CSSD 是否个案指定需邮件确认"},
-  15:{gpa:"存档：本科均分≥7.5 荷兰制+学士论文≥8；无中国换算公式，由招生委评定", cert:"同 Leiden 现行验证规则；⚠疑似停招先确认"},
   16:{gpa:"平均成绩须相当于荷兰制7.5；申请时须填报全部已修成绩平均值；86 不自动等于 7.5", cert:"conditional 后 2027-08-01 前交 certified copies（大学/公证人/宣誓翻译签章）；未及时领到学位证可交官方毕业证明（需 ESHCC 确认）；未列 WES/CSSD"},
   17:{gpa:"无最低均分公布；按课程内容个案录取（研究方法/理论/写作基础）", cert:"⚠ 申请截止前须完成 Qualification Check 验证（€59；2025-10-01 起取代常规海牙认证）；非英/荷/法/德文件须宣誓翻译；未毕业交预计毕业声明，注册前补齐最终验证"},
   18:{gpa:"评分=学术匹配4+均分5+附加1；无公开换算；Equivalencia de Nota Media 未明确预注册必交（general scholarship 注册时须交）", cert:"预注册可未合法化复印件；注册前非EEES未homologado学历：海牙/领事认证+UB comprobación（2026-27 为 €218.15 非 €216）+硕士准入证明；非西/加/英文件须合法化后官方翻译"},
@@ -1063,6 +1037,21 @@ const CANDIDATES = [
   { region:"美国公立", school:"UNC Charlotte", program:"Sociology, M.A.", degree:"MA · 2年（35学分）", lang:"英语", tuition:"约$19,000-20,000/年", deadline:"参照 priority 3-01", ielts:"IELTS 6.5", fit:"ok", prereq:"应用导向，对非社会学本科友好", funding:"部分 TA/RA", why:"就业导向清晰；适合偏应用路线", source:"https://academics.charlotte.edu/program/sociology-m-a-on-campus/" },
   { region:"美国公立", school:"SUNY Albany", program:"Sociology, M.A.", degree:"MA · 约2年", lang:"英语", tuition:"约$23,100/年", deadline:"参照 1-15", ielts:"IELTS 6.5", fit:"ok", prereq:"综合评估；社会人口学/不平等方向强", funding:"有限", why:"老牌社会学强系 terminal MA；资助少", source:"https://www.albany.edu/sociology/programs/ma-sociology" },
   { region:"美国公立", school:"Queens College (CUNY)", program:"Sociology, M.A.", degree:"MA · 约2年（30学分）", lang:"英语", tuition:"全程学费约$25,700（$855/学分）", deadline:"参照 2-3 月（滚动）", ielts:"IELTS 6.5", fit:"ok", prereq:"综合评估，对跨背景友好", funding:"很有限", why:"总学费低但纽约生活费高；适合有纽约资源者", source:"https://www.qc.cuny.edu/academics/sociology/" },
+
+  // ── 荷兰（新增）──
+  { region:"荷兰（新增）", school:"VU Amsterdam", program:"MSc Social and Cultural Anthropology", degree:"MSc · 1年（60 ECTS）", lang:"英语", tuition:"€25,370/年（2027-28）", deadline:"需签证非EU 2027-04-01；奖学金建议2026-12-01前申请", ielts:"IELTS 6.5", fit:"risky", prereq:"直接录取通常要人类学本科或30 EC人类学；其他背景委员会审查，可判最多30 EC预科", funding:"VUFP学费减免+自动考虑NL Scholarship €5,000（2027-02-01截止）", why:"社会学辅修不必然满足人类学理论与方法背景，有补预科风险；一年制含3个月田野", source:"https://vu.nl/en/education/master/social-and-cultural-anthropology/admissions" },
+  { region:"荷兰（新增）", school:"UvA", program:"MSc Cultural and Social Anthropology", degree:"MSc · 1年（60 ECTS）", lang:"英语", tuition:"€23,455/年（2027-28）", deadline:"非EEA：2027-02-05 Studielink / 2027-02-15 SIS", ielts:"IELTS 7.0（单项≥6.5）", fit:"risky", prereq:"约30 ECTS人类学（含一学期理论）+至少20 ECTS社科研究方法（强调质性）", funding:"Amsterdam Merit Scholarship=学费（2027-02-15截止，须无条件直接录取）", why:"30+20 ECTS 硬门槛，辅修未必够；满足后民族志训练自由度高", source:"https://www.uva.nl/en/programmes/masters/cultural-and-social-anthropology/application-and-admission/application-and-admission.html" },
+  { region:"荷兰（新增）", school:"Tilburg", program:"MSc Sociology: Politics, Policy and Society in Comparative Perspective", degree:"MSc · 1年（60 ECTS）", lang:"英语", tuition:"€19,900/年（26-27参照）", deadline:"非EEA 2027-04-01", ielts:"IELTS 6.5（写作/口语≥6.0）", fit:"ok", prereq:"社会学等本科；需社会学理论+其他社科+统计/方法，未设固定ECTS；不足可判最多30 EC预科", funding:"Tilburg Waiver 减免50%学费（须直接录取，2027-04-01前申请，超额抽签）", why:"接受多种社科背景个案审查，辅修可尝试；预科录取者不能申减免", source:"https://www.tilburguniversity.edu/education/masters-programs/sociology/application" },
+
+  // ── 意大利（新增）──
+  { region:"意大利（新增）", school:"Trento", program:"MA Sociology and Social Research", degree:"MA · 2年（120 ECTS）", lang:"英语", tuition:"非EU首年按录取分：≥90免学费 / 70-89 €1,000 / 60-69 €2,000 / 50-59 €4,500", deadline:"27-28未公布；参照2026-03-04 12:00 CET", ielts:"英语B2（IELTS 5.5）", fit:"risky", prereq:"至少3年本科+良好成绩；须40 ECTS且覆盖社会学、经济统计、法律/政治/社会政策、历史/人类学/心理/教育等至少两类；非EU仅6席；境外本科须6月30日前毕业", funding:"按录取排名自动评定奖学金，无需单独申请", why:"费用分档低且社会研究训练对口，但40 ECTS跨两类先修是主要风险", source:"https://corsi.unitn.it/en/sociology-and-social-research/enrollment/admission-non-europeans" },
+
+  // ── 中东欧（新增）──
+  { region:"中东欧（新增）", school:"Charles University（布拉格查理大学）", program:"MA Sociology of Contemporary Societies (SCS)", degree:"MA · 2年", lang:"英语", tuition:"€6,000/年", deadline:"27-28未公布；参照中期2026-06-30、延长2026-08-31；签证生建议2月/4月早鸟轮", ielts:"IELTS 6.5（单项≥6.0）", fit:"ok", prereq:"相关本科毕业；无固定社会学/人类学ECTS门槛", funding:"FSV UK Scholars 约CZK 75,000一次性生活补助（不免学费；2027-04-30截止）", why:"含空间与流动人类学方向，学费较低；用辅修+方法课程+研究经历证明匹配", source:"https://iss.fsv.cuni.cz/en/admissions/master-studies/sociology-contemporary-societies-scs" },
+  { region:"中东欧（新增）", school:"ELTE（布达佩斯）", program:"MA Cultural Anthropology", degree:"MA · 2年（120 ECTS）", lang:"英语", tuition:"€3,500/学期（约€7,000/年）", deadline:"2027-05-31（9月入学）；早鸟轮2026-11-15、2027-01-15，常规轮2027-04-30", ielts:"英语B2（IELTS 5.5；也可入学口试评估）", fit:"strong", prereq:"接受社科/传播/国际研究/社会工作/社会学/人类学本科；其他本科个案考虑，可要求入学后补学分；须在线口试并说明拟做的人类学田野研究计划", funding:"可申请 Stipendium Hungaricum 全额奖学金（学费+生活/住宿支持）", why:"跨专业友好且无固定人类学ECTS硬门槛，费用低；田野研究计划是口试重点", source:"https://www.elte.hu/en/cultural-anthropology-ma" },
+
+  // ── 法国（新增）──
+  { region:"法国（新增）", school:"Sciences Po（巴黎政治学院）", program:"Master’s in Sociology — Global Societies track", degree:"Master's · 2年（研究型，≥120 ECTS）", lang:"英语（Global Societies 方向，无需法语）", tuition:"€20,640/年（26-27参照）", deadline:"2027-02-21 23:59 巴黎时间（国际程序）", ielts:"IELTS 7.0（C1）", fit:"ok", prereq:"无特定先修学分要求；非法国本科经两阶段综合评审，需本科均分证明+2封学术推荐", funding:"Émile Boutmy 硕士每年€18,500学费减免（2027入学第二轮须2026-11-29前申请）", why:"全英语方向研究全球社会变迁与不平等，无社会学ECTS硬门槛；学费高、选拔严格", source:"https://www.sciencespo.fr/ecole-recherche/en/academics/masters/master-sociology/global-societies/" },
 
 ];
 
